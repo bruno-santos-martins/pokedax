@@ -28,9 +28,24 @@ export class AppComponent {
     this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${this.pageSize}`)
       .subscribe(res => {
         this.data = res.results.map((item: any) => ({
-          Nome: item.name,
-          URL: item.url
+          name: item.name,
+          url: item.url,
+          number: 12,
+          type: 'electric',
+          image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+          description: 'Pikachu armazena eletricidade nas bochechas e libera em ataques.',
+          stats: [
+            { label: 'HP', value: 35 },
+            { label: 'Ataque', value: 55 },
+            { label: 'Defesa', value: 40 }
+          ],
+          evolutions: [
+            { name: 'Pichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png' },
+            { name: 'Pikachu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png' },
+            { name: 'Raichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png' }
+          ]
         }));
+        console.log(res);
         this.count = res.count;
         this.currentPage = page;
       });
@@ -59,23 +74,7 @@ export class AppComponent {
     { label: 'Raticate', value: 'raticate' }
   ];
 
-  pokemonData = {
-    number: 25,
-    name: 'Pikachu',
-    type: 'electric',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-    description: 'Pikachu armazena eletricidade nas bochechas e libera em ataques.',
-    stats: [
-      { label: 'HP', value: 35 },
-      { label: 'Ataque', value: 55 },
-      { label: 'Defesa', value: 40 }
-    ],
-    evolutions: [
-      { name: 'Pichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png' },
-      { name: 'Pikachu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png' },
-      { name: 'Raichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png' }
-    ]
-  };
+
 
   onSelecionaPokemon(valor: any) {
     // valor é o value da opção selecionada
