@@ -59,6 +59,24 @@ export class AppComponent {
     { label: 'Raticate', value: 'raticate' }
   ];
 
+  pokemonData = {
+    number: 25,
+    name: 'Pikachu',
+    type: 'electric',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+    description: 'Pikachu armazena eletricidade nas bochechas e libera em ataques.',
+    stats: [
+      { label: 'HP', value: 35 },
+      { label: 'Ataque', value: 55 },
+      { label: 'Defesa', value: 40 }
+    ],
+    evolutions: [
+      { name: 'Pichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png' },
+      { name: 'Pikachu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png' },
+      { name: 'Raichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png' }
+    ]
+  };
+
   onSelecionaPokemon(valor: any) {
     // valor é o value da opção selecionada
     console.log('Selecionado:', valor);

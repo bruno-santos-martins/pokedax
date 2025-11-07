@@ -1,0 +1,27 @@
+<div class="pokemon-card" [ngStyle]="{ 'background': data.type === 'fire' ? 'linear-gradient(135deg, #ff9800 0%, #ffd600 100%)' : data.type === 'water' ? 'linear-gradient(135deg, #2196f3 0%, #b3e5fc 100%)' : 'linear-gradient(135deg, #ffe082 0%, #fffde4 100%)' }">
+  <div class="pokemon-header">
+    <span class="pokemon-number">#{{ data.number }}</span>
+    <span class="pokemon-type">{{ data.type | titlecase }}</span>
+  </div>
+  <img class="pokemon-image" [src]="data.image" [alt]="data.name" />
+  <h2 class="pokemon-name">{{ data.name }}</h2>
+  <p class="pokemon-description" *ngIf="data.description">{{ data.description }}</p>
+  <div class="pokemon-stats" *ngIf="data.stats">
+    <div class="stat" *ngFor="let stat of data.stats">
+      <span class="stat-label">{{ stat.label }}</span>
+      <div class="stat-bar">
+        <div class="stat-bar-fill" [style.width.%]="stat.value"></div>
+      </div>
+      <span class="stat-value">{{ stat.value }}</span>
+    </div>
+  </div>
+  <div class="pokemon-evolutions" *ngIf="data.evolutions?.length">
+    <span class="evolutions-title">Evoluções</span>
+    <div class="evolutions-list">
+      <div class="evolution" *ngFor="let evo of data.evolutions">
+        <img [src]="evo.image" [alt]="evo.name" class="evolution-image" />
+        <span class="evolution-name">{{ evo.name }}</span>
+      </div>
+    </div>
+  </div>
+</div>
