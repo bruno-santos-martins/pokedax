@@ -1,0 +1,30 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ES2020",
+
+    // ✅ Corrige o erro "can only be default-imported" dos tipos de React
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    // ✅ Evita conflito entre @types/node e @types/webpack-env (TS2403)
+    "skipLibCheck": true,
+
+    // ✅ Use só webpack-env aqui para o Storybook (o app Angular usa node no tsconfig dele)
+    "types": ["webpack-env"]
+  },
+
+  // ✅ Garante que o polyfills.ts entre na compilação do Storybook
+  "files": ["../src/polyfills.ts"],
+
+  "include": [
+    "../src/**/*.ts",
+    "../src/**/*.stories.ts",
+    "../src/**/*.stories.mdx"
+  ],
+  "exclude": [
+    "../src/test.ts",
+    "../src/**/*.spec.ts"
+  ]
+}
