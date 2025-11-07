@@ -9,17 +9,22 @@ import { PokemonCardData } from '../pokemon-card/pokemon-card.component';
 export class TableComponent {
   @Input() titles: string[] = [];
   @Input() data: Array<{ [key: string]: any }> = [];
-  @Input() pageSize: number = 5;
+  @Input() pageSize: number = 1;
   @Input() count: number = 0;
   @Input() currentPage: number = 1;
   @Input() cardAdapter?: (row: any) => PokemonCardData;
-  //@Output() pageChange = new EventEmitter<number>();
+  @Output() pageChange = new EventEmitter<number>();
 
   get totalPages(): number {
     return this.count > 0 ? Math.ceil(this.count / this.pageSize) : Math.ceil(this.data.length / this.pageSize);
   }
 
   get paginatedData(): Array<{ [key: string]: any }> {
+    // Para paginação vinda do servidor (data já é apenas a página atual),
+    // não aplicar slice para não esvaziar a lista quando currentPage > 1
+    if (this.count > 0 && this.data.length <= this.pageSize) {
+      return this.data;
+    }
     const start = (this.currentPage - 1) * this.pageSize;
     return this.data.slice(start, start + this.pageSize);
   }
@@ -27,23 +32,25 @@ export class TableComponent {
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.pageChange.emit(this.currentPage);
     }
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.pageChange.emit(this.currentPage);
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.pageChange.emit(this.currentPage);
     }
   }
 
   toCard(row: any): PokemonCardData {
-    console.log(row);
     if (this.cardAdapter) {
       return this.cardAdapter(row);
     }

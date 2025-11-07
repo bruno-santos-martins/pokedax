@@ -9,8 +9,14 @@
       </app-autocomplete>
     </div>
     <div class="table-search-pokemon">
-      <app-table [titles]="titles" [data]="data"> </app-table>
-
+      <app-table
+        [titles]="titles"
+        [data]="data"
+        [count]="count"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="loadPage($event)">
+      </app-table>
     </div>
 
 

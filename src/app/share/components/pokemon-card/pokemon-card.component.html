@@ -1,4 +1,4 @@
-<div class="pokemon-card" [ngStyle]="{ 'background': data.type === 'fire' ? 'linear-gradient(135deg, #ff9800 0%, #ffd600 100%)' : data.type === 'water' ? 'linear-gradient(135deg, #2196f3 0%, #b3e5fc 100%)' : 'linear-gradient(135deg, #ffe082 0%, #fffde4 100%)' }">
+<div class="pokemon-card" [ngClass]="'type-' + (data.type || 'normal')">
   <div class="pokemon-header">
     <span class="pokemon-number">#{{ data.number }}</span>
     <span class="pokemon-type">{{ data.type | titlecase }}</span>

@@ -11,23 +11,22 @@ import { map, switchMap } from 'rxjs/operators';
 export class AppComponent {
   constructor(private http: HttpClient) {}
 
-  @Input() count: number = 0;
-  @Input() currentPage: number = 1;
+  count: number = 0;
 
   data: any[] = [];
+  currentPage = 0;
 
-  pageSize = 30;
-
-
-  titles = ['Nome', 'Tipo'];
+  pageSize = 16;
+  titles: string[] = ['Nome', 'Tipo'];
 
   ngOnInit() {
     this.loadPage(1);
   }
 
   loadPage(page: number) {
+  this.currentPage = page;
   const offset = (page - 1) * this.pageSize;
-
+  console.log(page);
   this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${this.pageSize}`)
     .pipe(
       // 1️⃣ Quando chega a lista, mapeia cada item pra uma nova requisição
@@ -55,13 +54,13 @@ export class AppComponent {
     // 3️⃣ Quando tudo terminar, atribui os dados
           .subscribe({
             next: (pokemons: any[]) => {
-       if (Array.isArray(pokemons)) {
-          this.data = pokemons;
-          console.log('Pokémons carregados:', this.data);
-        } else {
-          console.error('Erro: pokemons não é um array', pokemons);
-        }
-      },
+              if (Array.isArray(pokemons)) {
+                this.data = pokemons;
+                console.log('Pokémons página', this.currentPage, 'carregados:', this.data);
+              } else {
+                console.error('Erro: pokemons não é um array', pokemons);
+              }
+            },
       error: (err) => console.error(err)
     });
 }
