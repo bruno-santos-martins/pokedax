@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -24,32 +26,45 @@ export class AppComponent {
   }
 
   loadPage(page: number) {
-    const offset = (page - 1) * this.pageSize;
-    this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${this.pageSize}`)
-      .subscribe(res => {
-        this.data = res.results.map((item: any) => ({
-          name: item.name,
-          url: item.url,
-          number: 12,
-          type: 'electric',
-          image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-          description: 'Pikachu armazena eletricidade nas bochechas e libera em ataques.',
-          stats: [
-            { label: 'HP', value: 35 },
-            { label: 'Ataque', value: 55 },
-            { label: 'Defesa', value: 40 }
-          ],
-          evolutions: [
-            { name: 'Pichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png' },
-            { name: 'Pikachu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png' },
-            { name: 'Raichu', image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png' }
-          ]
-        }));
-        console.log(res);
+  const offset = (page - 1) * this.pageSize;
+
+  this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${this.pageSize}`)
+    .pipe(
+      // 1️⃣ Quando chega a lista, mapeia cada item pra uma nova requisição
+      switchMap((res) => {
         this.count = res.count;
-        this.currentPage = page;
-      });
-  }
+        const requests = res.results.map((item: any) => {
+          const id = this.extractIdFromUrl(item.url);
+          return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${item.name}`).pipe(
+            map(poke => ({
+              name: poke.name,
+              number: id,
+              type: poke.types[0].type.name,
+              image: poke.sprites.other['official-artwork'].front_default,
+              stats: poke.stats.map((s: any) => ({
+                label: s.stat.name,
+                value: s.base_stat
+              }))
+            }))
+          );
+        });
+        // 2️⃣ Espera todas as requisições terminarem
+              return forkJoin<any[]>(requests);
+      })
+    )
+    // 3️⃣ Quando tudo terminar, atribui os dados
+          .subscribe({
+            next: (pokemons: any[]) => {
+       if (Array.isArray(pokemons)) {
+          this.data = pokemons;
+          console.log('Pokémons carregados:', this.data);
+        } else {
+          console.error('Erro: pokemons não é um array', pokemons);
+        }
+      },
+      error: (err) => console.error(err)
+    });
+}
 
   listaDeOpcoes = [
     { label: 'Bulbasaur', value: 'bulbasaur' },
@@ -79,6 +94,12 @@ export class AppComponent {
   onSelecionaPokemon(valor: any) {
     // valor é o value da opção selecionada
     console.log('Selecionado:', valor);
+  }
+
+  // Extrai o último número de uma URL como "https://pokeapi.co/api/v2/pokemon/14/" => 14
+  extractIdFromUrl(url: string): number {
+    const match = url?.match(/\/(\d+)\/?$/);
+    return match ? Number(match[1]) : 0;
   }
 
 }
