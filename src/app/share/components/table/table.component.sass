@@ -1,0 +1,52 @@
+.table-wrapper
+  width: 100%
+  overflow-x: auto
+  margin: 1.5rem 0
+
+  .pagination-controls
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 1rem
+    margin-top: 1rem
+
+    button
+      background: #fffde4
+      border: 1px solid #ffd600
+      color: #333
+      border-radius: 8px
+      padding: 0.5rem 1rem
+      font-size: 1rem
+      cursor: pointer
+      transition: background 0.2s
+
+      &:disabled
+        background: #f0f0f0
+        color: #bbb
+        cursor: not-allowed
+
+    span
+      font-weight: 500
+      color: #333
+
+.custom-table
+  width: 100%
+  border-collapse: collapse
+  background: #fff
+  border-radius: 12px
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08)
+  font-size: 1rem
+
+  th, td
+    padding: 0.75rem 1rem
+    text-align: left
+    border-bottom: 1px solid #f0f0f0
+
+  th
+    background: #fffde4
+    color: #333
+    font-weight: 600
+    border-top: 1px solid #ffd600
+
+  tr:last-child td
+    border-bottom: none

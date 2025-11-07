@@ -1,0 +1,19 @@
+<router-outlet></router-outlet>
+<app-container>
+  <div class="container">
+    <div class="container-search-pokemon">
+      <app-input
+        type="search"
+        label="Pesquisar Pokémon"
+        labelSize="large"
+        inputSize="medium"
+      >
+      </app-input>
+    </div>
+    <div class="table-search-pokemon">
+      <app-table [titles]="titles" [data]="data"> </app-table>
+
+    </div>
+  </div>
+</app-container>
+
