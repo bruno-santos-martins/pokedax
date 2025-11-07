@@ -1,14 +1,19 @@
 import { moduleMetadata, Meta, Story } from '@storybook/angular';
 import { ShareModule } from '../../share.module';
+import { PokemonCardComponent } from './pokemon-card.component';
 
 export default {
   title: 'Share/PokemonCard',
+  component: PokemonCardComponent,
   decorators: [
     moduleMetadata({ imports: [ShareModule] })
   ]
-} as Meta;
+} as Meta<any>;
 
-const Template: Story = (args) => ({ props: { data: args } });
+const Template: Story<any> = (args: any) => ({
+  component: PokemonCardComponent,
+  props: { data: args }
+});
 
 export const Default = Template.bind({});
 Default.args = {
