@@ -2,13 +2,11 @@
 <app-container>
   <div class="container">
     <div class="container-search-pokemon">
-      <app-input
-        type="search"
+      <app-autocomplete
+        [options]="listaDeOpcoes"
         label="Pesquisar Pokémon"
-        labelSize="large"
-        inputSize="medium"
-      >
-      </app-input>
+        (valueChange)="onSelecionaPokemon($event)">
+      </app-autocomplete>
     </div>
     <div class="table-search-pokemon">
       <app-table [titles]="titles" [data]="data"> </app-table>

@@ -36,4 +36,32 @@ export class AppComponent {
       });
   }
 
+  listaDeOpcoes = [
+    { label: 'Bulbasaur', value: 'bulbasaur' },
+    { label: 'Ivysaur', value: 'ivysaur' },
+    { label: 'Venusaur', value: 'venusaur' },
+    { label: 'Charmander', value: 'charmander' },
+    { label: 'Charmeleon', value: 'charmeleon' },
+    { label: 'Charizard', value: 'charizard' },
+    { label: 'Squirtle', value: 'squirtle' },
+    { label: 'Wartortle', value: 'wartortle' },
+    { label: 'Blastoise', value: 'blastoise' },
+    { label: 'Caterpie', value: 'caterpie' },
+    { label: 'Metapod', value: 'metapod' },
+    { label: 'Butterfree', value: 'butterfree' },
+    { label: 'Weedle', value: 'weedle' },
+    { label: 'Kakuna', value: 'kakuna' },
+    { label: 'Beedrill', value: 'beedrill' },
+    { label: 'Pidgey', value: 'pidgey' },
+    { label: 'Pidgeotto', value: 'pidgeotto' },
+    { label: 'Pidgeot', value: 'pidgeot' },
+    { label: 'Rattata', value: 'rattata' },
+    { label: 'Raticate', value: 'raticate' }
+  ];
+
+  onSelecionaPokemon(valor: any) {
+    // valor é o value da opção selecionada
+    console.log('Selecionado:', valor);
+  }
+
 }
