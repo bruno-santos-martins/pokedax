@@ -28,6 +28,9 @@ export class AutocompleteComponent {
     const text = this.searchText.toLowerCase();
     this.filteredOptions = this.options.filter(opt => opt.label.toLowerCase().includes(text));
     this.showDropdown = !!text && this.filteredOptions.length > 0;
+    if (!text) {
+      this.valueChange.emit(null);
+    }
   }
 
   selectOption(option: AutocompleteOption) {

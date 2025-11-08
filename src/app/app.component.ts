@@ -1,18 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}
 
   count: number = 0;
-
+  listaDeOpcoes: any[] = [];
   data: any[] = [];
   currentPage = 0;
 
@@ -21,78 +21,118 @@ export class AppComponent {
 
   ngOnInit() {
     this.loadPage(1);
+    this.listAllPokemons();
   }
 
-  loadPage(page: number) {
-  this.currentPage = page;
-  const offset = (page - 1) * this.pageSize;
-  console.log(page);
-  this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${this.pageSize}`)
-    .pipe(
-      // 1️⃣ Quando chega a lista, mapeia cada item pra uma nova requisição
-      switchMap((res) => {
-        this.count = res.count;
-        const requests = res.results.map((item: any) => {
-          const id = this.extractIdFromUrl(item.url);
-          return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${item.name}`).pipe(
-            map(poke => ({
+  loadPage(page: number, pokemon: string | null = null) {
+    this.currentPage = page;
+
+    let source$: Observable<any[]>;
+
+    if (pokemon) {
+      // 🔍 Busca de um único Pokémon
+      source$ = this.http
+        .get<any>(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        .pipe(
+          map((poke) => {
+            // você pode usar poke.id direto ou manter seu extractIdFromUrl se quiser
+            const id = poke.id;
+
+            const mapped = {
               name: poke.name,
               number: id,
               type: poke.types[0].type.name,
               image: poke.sprites.other['official-artwork'].front_default,
               stats: poke.stats.map((s: any) => ({
                 label: s.stat.name,
-                value: s.base_stat
-              }))
-            }))
-          );
-        });
-        // 2️⃣ Espera todas as requisições terminarem
-              return forkJoin<any[]>(requests);
-      })
-    )
-    // 3️⃣ Quando tudo terminar, atribui os dados
-          .subscribe({
-            next: (pokemons: any[]) => {
-              if (Array.isArray(pokemons)) {
-                this.data = pokemons;
-                console.log('Pokémons página', this.currentPage, 'carregados:', this.data);
-              } else {
-                console.error('Erro: pokemons não é um array', pokemons);
-              }
-            },
-      error: (err) => console.error(err)
+                value: s.base_stat,
+              })),
+            };
+
+            // 🔁 importante: retornar ARRAY pra bater com o fluxo original
+            return [mapped];
+          })
+        );
+      // opcional: ajustar o count quando for busca
+      this.count = 1;
+    } else {
+      // 📄 Paginação normal
+      const offset = (page - 1) * this.pageSize;
+
+      source$ = this.http
+        .get<any>(
+          `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${this.pageSize}`
+        )
+        .pipe(
+          switchMap((res) => {
+            this.count = res.count;
+
+            const requests = res.results.map((item: any) => {
+              const id = this.extractIdFromUrl(item.url);
+
+              return this.http
+                .get<any>(`https://pokeapi.co/api/v2/pokemon/${item.name}`)
+                .pipe(
+                  map((poke) => ({
+                    name: poke.name,
+                    number: id,
+                    type: poke.types[0].type.name,
+                    image: poke.sprites.other['official-artwork'].front_default,
+                    stats: poke.stats.map((s: any) => ({
+                      label: s.stat.name,
+                      value: s.base_stat,
+                    })),
+                  }))
+                );
+            });
+
+            return forkJoin<any[]>(requests);
+          })
+        );
+    }
+
+    source$.subscribe({
+      next: (pokemons: any[]) => {
+        if (Array.isArray(pokemons)) {
+          this.data = pokemons;
+        } else {
+          console.error('Erro: pokemons não é um array', pokemons);
+        }
+      },
+      error: (err: any) => console.error(err),
     });
-}
+  }
 
-  listaDeOpcoes = [
-    { label: 'Bulbasaur', value: 'bulbasaur' },
-    { label: 'Ivysaur', value: 'ivysaur' },
-    { label: 'Venusaur', value: 'venusaur' },
-    { label: 'Charmander', value: 'charmander' },
-    { label: 'Charmeleon', value: 'charmeleon' },
-    { label: 'Charizard', value: 'charizard' },
-    { label: 'Squirtle', value: 'squirtle' },
-    { label: 'Wartortle', value: 'wartortle' },
-    { label: 'Blastoise', value: 'blastoise' },
-    { label: 'Caterpie', value: 'caterpie' },
-    { label: 'Metapod', value: 'metapod' },
-    { label: 'Butterfree', value: 'butterfree' },
-    { label: 'Weedle', value: 'weedle' },
-    { label: 'Kakuna', value: 'kakuna' },
-    { label: 'Beedrill', value: 'beedrill' },
-    { label: 'Pidgey', value: 'pidgey' },
-    { label: 'Pidgeotto', value: 'pidgeotto' },
-    { label: 'Pidgeot', value: 'pidgeot' },
-    { label: 'Rattata', value: 'rattata' },
-    { label: 'Raticate', value: 'raticate' }
-  ];
-
-
+  listAllPokemons = () => {
+    this.http
+      .get<any>('https://pokeapi.co/api/v2/pokemon?offset=0&limit=10000')
+      .pipe(
+        map((res) =>
+          res.results.map((item: any) => ({
+            label: item.name,
+            value: item.name,
+          }))
+        )
+      )
+      .subscribe({
+        next: (options) => {
+          this.listaDeOpcoes = options;
+          console.log(
+            'Lista completa de Pokémons carregada:',
+            this.listaDeOpcoes
+          );
+        },
+        error: (err) => console.error(err),
+      });
+  };
 
   onSelecionaPokemon(valor: any) {
-    // valor é o value da opção selecionada
-    console.log('Selecionado:', valor);
+    if (valor) {
+      this.loadPage(1, valor);
+    } else {
+      console.log("todos");
+      this.loadPage(1);
+    }
   }
 
   // Extrai o último número de uma URL como "https://pokeapi.co/api/v2/pokemon/14/" => 14
@@ -100,5 +140,4 @@ export class AppComponent {
     const match = url?.match(/\/(\d+)\/?$/);
     return match ? Number(match[1]) : 0;
   }
-
 }
