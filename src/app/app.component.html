@@ -15,8 +15,10 @@
         [count]="count"
         [pageSize]="pageSize"
         [currentPage]="currentPage"
-        (pageChange)="loadPage($event)">
+        (pageChange)="loadPage($event)"
+        (selectPokemon)="onPokemonSelected($event)">
       </app-table>
+      <app-modal-pokemon [open]="modalOpen" [pokemon]="selectedPokemon" (close)="modalOpen = false"></app-modal-pokemon>
     </div>
   </div>
 </app-container>

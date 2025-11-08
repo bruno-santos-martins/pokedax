@@ -14,6 +14,7 @@ export class TableComponent {
   @Input() currentPage: number = 1;
   @Input() cardAdapter?: (row: any) => PokemonCardData;
   @Output() pageChange = new EventEmitter<number>();
+  @Output() selectPokemon = new EventEmitter<PokemonCardData>();
 
   get totalPages(): number {
     return this.count > 0 ? Math.ceil(this.count / this.pageSize) : Math.ceil(this.data.length / this.pageSize);
@@ -81,5 +82,9 @@ export class TableComponent {
       : undefined;
 
     return { number, name, type, image, description, stats, evolutions } as PokemonCardData;
+  }
+
+  onCardSelected(row: any) {
+    this.selectPokemon.emit(row);
   }
 }

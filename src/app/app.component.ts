@@ -18,6 +18,8 @@ export class AppComponent {
 
   pageSize = 16;
   titles: string[] = ['Nome', 'Tipo'];
+  modalOpen = false;
+  selectedPokemon: any = null;
 
   ngOnInit() {
     this.loadPage(1);
@@ -130,9 +132,13 @@ export class AppComponent {
     if (valor) {
       this.loadPage(1, valor);
     } else {
-      console.log("todos");
       this.loadPage(1);
     }
+  }
+
+  onPokemonSelected(card: any) {
+    this.selectedPokemon = card;
+    this.modalOpen = true;
   }
 
   // Extrai o último número de uma URL como "https://pokeapi.co/api/v2/pokemon/14/" => 14

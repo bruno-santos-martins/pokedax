@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { PokemonCardComponent } from './components/pokemon-card/pokemon-card.component';
+import { ModalPokemonComponent } from './components/modal-pokemon/modal-pokemon.component';
 
 @NgModule({
   declarations: [
@@ -13,14 +14,16 @@ import { PokemonCardComponent } from './components/pokemon-card/pokemon-card.com
     InputComponent,
     TableComponent,
     AutocompleteComponent,
-    PokemonCardComponent
+    PokemonCardComponent,
+    ModalPokemonComponent
   ],
   exports: [
     ContainerComponent,
     InputComponent,
     TableComponent,
     AutocompleteComponent,
-    PokemonCardComponent
+    PokemonCardComponent,
+    ModalPokemonComponent
   ],
   imports: [
     CommonModule,

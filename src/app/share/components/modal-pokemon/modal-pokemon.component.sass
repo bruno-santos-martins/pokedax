@@ -1,0 +1,104 @@
+.modal-backdrop
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  background: rgba(0,0,0,0.5)
+  display: flex
+  align-items: center
+  justify-content: center
+  z-index: 1000
+
+.modal-content
+  background: #fff
+  border-radius: 24px
+  width: 95vw
+  max-width: 400px
+  box-shadow: 0 4px 32px rgba(0,0,0,0.18)
+  overflow: hidden
+  position: relative
+
+.close-btn
+  position: absolute
+  top: 16px
+  right: 16px
+  background: #eee
+  border: none
+  border-radius: 50%
+  width: 32px
+  height: 32px
+  font-size: 1.5rem
+  cursor: pointer
+  z-index: 10
+
+.modal-header
+  padding: 2rem 1rem 1rem 1rem
+  text-align: center
+  color: #fff
+  position: relative
+
+.pokemon-img
+  width: 120px
+  height: 120px
+  object-fit: contain
+  margin: 0 auto
+  display: block
+
+.type-badges
+  margin: 0.5rem 0
+  display: flex
+  justify-content: center
+  gap: 0.5rem
+
+.type-badge
+  padding: 0.25rem 0.75rem
+  border-radius: 12px
+  font-size: 0.9rem
+  color: #fff
+  background: #888
+  text-transform: capitalize
+
+.pokemon-number
+  position: absolute
+  top: 1rem
+  right: 1rem
+  font-size: 1.1rem
+  opacity: 0.8
+
+.modal-body
+  background: #fff
+  border-radius: 24px 24px 0 0
+  padding: 1.5rem 1rem 1rem 1rem
+
+.tabs
+  display: flex
+  justify-content: center
+  gap: 2rem
+  margin-bottom: 1rem
+
+.tabs a
+  color: #2196f3
+  text-decoration: none
+  font-weight: 500
+  padding-bottom: 0.25rem
+  border-bottom: 2px solid transparent
+  cursor: pointer
+  transition: border 0.2s
+
+.tabs a.active
+  border-bottom: 2px solid #8e24aa
+  color: #8e24aa
+
+.tab-content
+  min-height: 120px
+
+.info-row
+  display: flex
+  justify-content: space-between
+  padding: 0.5rem 0
+  font-size: 1rem
+  border-bottom: 1px solid #f0f0f0
+
+.info-row:last-child
+  border-bottom: none
