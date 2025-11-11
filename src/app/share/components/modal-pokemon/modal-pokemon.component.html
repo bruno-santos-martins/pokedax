@@ -3,7 +3,6 @@
     <button class="close-btn" (click)="onClose()">×</button>
     <div class="modal-header" [ngStyle]="{'background': pokemon?.typeColor}">
       <h2>{{ pokemon?.name | titlecase }}</h2>
-      <span class="pokemon-number">#{{ pokemon?.number | number:'3.0' }}</span>
       <div class="type-badges">
         <span *ngFor="let t of pokemon?.types" class="type-badge" [ngClass]="'type-' + t">{{ t }}</span>
       </div>
@@ -29,7 +28,17 @@
           </div>
         </ng-container>
         <ng-container *ngIf="activeTab === 'evo'">
-          <div class="info-row">Evolution info here...</div>
+          <div *ngIf="pokemon?.evolutions?.length; else noEvo">
+            <div class="evolutions-list">
+              <div class="evolution" *ngFor="let evo of pokemon.evolutions">
+                <img [src]="evo.image" [alt]="evo.name" class="evolution-image" />
+                <span class="evolution-name">{{ evo.name | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+          <ng-template #noEvo>
+            <div class="info-row">Sem evoluções para este Pokémon.</div>
+          </ng-template>
         </ng-container>
       </div>
     </div>

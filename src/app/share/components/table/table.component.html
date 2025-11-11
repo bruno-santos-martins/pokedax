@@ -1,6 +1,6 @@
 <div class="cards-wrapper">
   <div class="cards-grid">
-  <app-pokemon-card *ngFor="let row of paginatedData" [data]="toCard(row)" (select)="onCardSelected(row)"></app-pokemon-card>
+  <app-pokemon-card *ngFor="let row of paginatedData" [data]="toCard(row)" (select)="onCardSelected($event)"></app-pokemon-card>
   </div>
   <div class="pagination-controls">
     <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>

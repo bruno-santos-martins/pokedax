@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { PokemonService } from 'src/app/core/services/pokemon.service';
 
 export interface PokemonCardData {
   number: number;
@@ -8,6 +9,10 @@ export interface PokemonCardData {
   description?: string;
   stats?: { label: string; value: number }[];
   evolutions?: { name: string; image: string }[];
+  height?: number;
+  weight?: number;
+  abilities?: string[];
+  types?: string[];
 }
 
 @Component({
@@ -20,10 +25,25 @@ export class PokemonCardComponent {
   @Input() data!: PokemonCardData;
   @Output() select = new EventEmitter<PokemonCardData>();
 
+  constructor(private pokemonService: PokemonService) {}
+
+
+
   onClick() {
+
     if (this.data) {
-      this.select.emit(this.data);
-      console.log(this.data);
+      console.log("card");
+
+      this.pokemonService.getPokemonEvolutionChain(this.data.number).subscribe(evolutions => {
+        const evoList = evolutions.map((evo, idx) => ({
+          name: evo.name,
+          image: evo.image,
+          order: idx + 1
+        }));
+        const cardWithEvo: PokemonCardData = { ...this.data, evolutions: evoList };
+        console.log('Evoluções carregadas:', cardWithEvo.evolutions);
+        this.select.emit(cardWithEvo);
+      });
     }
   }
 }

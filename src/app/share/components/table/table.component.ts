@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PokemonCardData } from '../pokemon-card/pokemon-card.component';
+import { PokemonService } from 'src/app/core/services/pokemon.service';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,8 @@ export class TableComponent {
   @Input() cardAdapter?: (row: any) => PokemonCardData;
   @Output() pageChange = new EventEmitter<number>();
   @Output() selectPokemon = new EventEmitter<PokemonCardData>();
+
+  constructor(private pokemonService: PokemonService) {}
 
   get totalPages(): number {
     return this.count > 0 ? Math.ceil(this.count / this.pageSize) : Math.ceil(this.data.length / this.pageSize);
@@ -73,6 +76,7 @@ export class TableComponent {
         })
       : undefined;
 
+
     const evolutions: PokemonCardData['evolutions'] = Array.isArray(row.evolutions)
       ? row.evolutions.map((e: any) => ({
           name: e.name ?? '',
@@ -84,7 +88,7 @@ export class TableComponent {
     return { number, name, type, image, description, stats, evolutions } as PokemonCardData;
   }
 
-  onCardSelected(row: any) {
-    this.selectPokemon.emit(row);
+  onCardSelected(card: PokemonCardData) {
+    this.selectPokemon.emit(card);
   }
 }

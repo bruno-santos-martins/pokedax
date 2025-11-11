@@ -15,13 +15,9 @@
       <span class="stat-value">{{ stat.value }}</span>
     </div>
   </div>
-  <div class="pokemon-evolutions" *ngIf="data.evolutions?.length">
-    <span class="evolutions-title">Evoluções</span>
-    <div class="evolutions-list">
-      <div class="evolution" *ngFor="let evo of data.evolutions">
-        <img [src]="evo.image" [alt]="evo.name" class="evolution-image" />
-        <span class="evolution-name">{{ evo.name }}</span>
-      </div>
-    </div>
+  <div class="pokemon-about" *ngIf="data.height || data.weight || data.abilities?.length">
+    <div class="about-row" *ngIf="data.height">Height: <strong>{{ data.height }} m</strong></div>
+    <div class="about-row" *ngIf="data.weight">Weight: <strong>{{ data.weight }} kg</strong></div>
+  <div class="about-row" *ngIf="data.abilities?.length">Abilities: <strong>{{ data.abilities?.join(', ') }}</strong></div>
   </div>
 </div>
