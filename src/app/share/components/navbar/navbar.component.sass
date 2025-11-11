@@ -1,0 +1,64 @@
+.top-menu
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: .65rem 1rem
+  background: rgba(255,255,255,0.35)
+  backdrop-filter: saturate(160%) blur(10px)
+  -webkit-backdrop-filter: saturate(160%) blur(10px)
+  border-bottom: px solid rgba(15,23,42,0.06)
+  box-shadow: 0 10px 30px -20px rgba(15,23,42,.6)
+  position: fixed
+  top: 0
+  right: 0
+  left: 0
+  z-index: 50
+
+  .brand
+    font-size: 1.05rem
+    font-weight: 600
+    letter-spacing: .3px
+    color: #0f172a
+
+  .links
+    list-style: none
+    display: flex
+    gap: .5rem
+    margin: 0
+    padding: 0
+
+    a
+      position: relative
+      display: inline-block
+      color: #334155
+      text-decoration: none
+      font-size: .92rem
+      font-weight: 500
+      padding: .38rem .7rem
+      border-radius: .5rem
+      transition: background .25s, color .25s, transform .2s, box-shadow .25s
+
+      &:hover
+        background: rgba(15,23,42,0.06)
+        color: #0f172a
+
+      &.active
+        background: rgba(14,165,233,0.16)
+        color: #0f172a
+        box-shadow: 0 2px 6px -2px rgba(14,165,233,.35)
+
+      &::after
+        content: ''
+        position: absolute
+        left: 12px
+        right: 12px
+        bottom: 6px
+        height: 2px
+        background: linear-gradient(90deg,#38bdf8,#6366f1)
+        opacity: 0
+        transform: scaleX(.4)
+        transition: .3s
+
+      &.active::after
+        opacity: 1
+        transform: scaleX(1)
