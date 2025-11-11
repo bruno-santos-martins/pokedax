@@ -1,7 +1,7 @@
-<div class="modal-backdrop" *ngIf="open">
+<div class="modal-backdrop" *ngIf="open" [ngClass]="'type-' + (pokemon.type || 'normal')">
   <div class="modal-content">
     <button class="close-btn" (click)="onClose()">×</button>
-    <div class="modal-header" [ngStyle]="{'background': pokemon?.typeColor}">
+    <div class="modal-header" [ngStyle]="{'background': pokemon?.type}">
       <h2>{{ pokemon?.name | titlecase }}</h2>
       <div class="type-badges">
         <span *ngFor="let t of pokemon?.types" class="type-badge" [ngClass]="'type-' + t">{{ t }}</span>
@@ -9,6 +9,7 @@
       <img [src]="pokemon?.image" [alt]="pokemon?.name" class="pokemon-img" />
     </div>
     <div class="modal-body">
+      <span>{{ pokemon.type }}</span>
       <nav class="tabs">
         <a [class.active]="activeTab === 'about'" (click)="activeTab = 'about'">About</a>
         <a [class.active]="activeTab === 'base'" (click)="activeTab = 'base'">Base Stats</a>
