@@ -1,12 +1,55 @@
-<div class="sobre-page">
-  <h1>Sobre o Projeto</h1>
-  <p>Esta Pokédex foi construída em Angular 13, consumindo a PokéAPI, com RxJS, TypeScript e SASS.</p>
-  <h2>Tecnologias</h2>
-  <ul>
-    <li>Angular 13</li>
-    <li>TypeScript</li>
-    <li>RxJS</li>
-    <li>SASS</li>
-    <li>PokéAPI</li>
-  </ul>
-</div>
+<section class="sobre-page">
+  <header class="hero">
+    <h1>Sobre o Projeto</h1>
+    <p class="subtitle">Uma Pokédex moderna com busca, lista paginada e detalhes completos, construída para aprender e demonstrar boas práticas com Angular.</p>
+  </header>
+
+  <div class="grid">
+    <article class="card">
+      <h2>Visão Geral</h2>
+      <p>
+        A Pokedax integra com a <strong>PokéAPI</strong> para listar Pokémons, permitir busca por nome e exibir detalhes em um modal com abas:
+        <em>About</em> (altura, peso e habilidades) e <em>Evolution</em> (cadeia evolutiva completa).
+      </p>
+    </article>
+
+    <article class="card">
+      <h2>Arquitetura</h2>
+      <ul class="list">
+        <li><strong>Angular 13 + TypeScript</strong> como base do app</li>
+        <li><strong>RxJS</strong> para chamadas assíncronas e composição de fluxos</li>
+        <li><strong>Serviço único</strong> (<code>pokemon.service.ts</code>) centraliza chamadas (lista, detalhes, evoluções)</li>
+        <li><strong>ShareModule</strong> com componentes reutilizáveis (navbar, tabela, card, modal, autocomplete)</li>
+        <li><strong>Estilos SASS</strong> e utilitários de cor por tipo</li>
+        <li><strong>Roteamento</strong>: <code>/</code> (Home) e <code>/sobre</code> (esta página)</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h2>Fluxo de Dados</h2>
+      <ol class="list">
+        <li>Home carrega a página de Pokémons via serviço (paginação)</li>
+        <li>Autocomplete consulta nomes para busca rápida</li>
+        <li>Ao clicar num card, o modal é aberto com About + Evolution</li>
+        <li>Cores dinâmicas são aplicadas conforme os <em>types</em> do Pokémon</li>
+      </ol>
+    </article>
+
+    <article class="card">
+      <h2>Stack Técnica</h2>
+      <div class="tags">
+        <span>Angular 13</span><span>TypeScript</span><span>RxJS</span><span>SASS</span><span>PokéAPI</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Próximos Passos</h2>
+      <ul class="list">
+        <li>Favoritar Pokémons (localStorage)</li>
+        <li>Filtros por tipo/geração</li>
+        <li>Transições animadas no modal</li>
+        <li>Testes unitários dos componentes e serviços</li>
+      </ul>
+    </article>
+  </div>
+</section>
