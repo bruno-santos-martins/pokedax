@@ -30,6 +30,10 @@ Uma Pokédex moderna construída em Angular, com lista paginada, busca por autoc
 
 ![Detalhe](image-2.png)
 
+## Acessar URL
+
+> https://pokedax-git-main-brmartins92s-projects.vercel.app/
+
 ## 🚀 Como rodar
 
 Pré-requisitos: Node.js LTS e npm instalados.
