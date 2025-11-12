@@ -32,9 +32,9 @@ jobs:
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-token: ${{ secrets.TOKEN_POKEAPI }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.TOKEN_POKEAPI }}
