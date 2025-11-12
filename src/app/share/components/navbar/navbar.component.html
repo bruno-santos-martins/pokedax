@@ -1,5 +1,9 @@
 <nav class="top-menu">
-  <div class="brand">Pokedax</div>
+  <div class="brand">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <img src="../../../../assets/pokedex-3d-logo.png" alt="Pokedax Logo" class="logo-img" />
+    </a>
+  </div>
   <ul class="links">
     <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
     <li><a routerLink="/sobre" routerLinkActive="active">Sobre</a></li>
