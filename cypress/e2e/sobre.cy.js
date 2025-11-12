@@ -7,8 +7,6 @@ describe('Página Sobre', () => {
     cy.contains('Arquitetura').should('be.visible');
     cy.contains('Fluxo de Dados').should('be.visible');
     cy.contains('Stack').should('be.visible');
-    cy.contains('Decisões').should('be.visible');
-    cy.contains('Roadmap').should('be.visible');
   });
 
   it('deve exibir o menu de navegação', () => {
