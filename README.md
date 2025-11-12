@@ -32,7 +32,7 @@ Uma Pokédex moderna construída em Angular, com lista paginada, busca por autoc
 
 ## Acessar URL
 
-> https://pokedax-git-main-brmartins92s-projects.vercel.app/
+> https://pokedax-five.vercel.app/
 
 ## 🚀 Como rodar
 
