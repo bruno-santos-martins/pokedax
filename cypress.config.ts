@@ -7,7 +7,8 @@ export default defineConfig({
     setupNodeEvents(on, config) {
 
     },
-    baseUrl: 'https://pokedax-five.vercel.app',
+    //baseUrl: 'https://pokedax-five.vercel.app',
+    baseUrl: process.env['CYPRESS_BASE_URL'] || 'http://localhost:4200',
     testIsolation: false,
   },
 });

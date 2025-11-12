@@ -1,22 +1,20 @@
 
-describe('Pokedax Home Page', () => {
-  it('deve exibir o título da Pokédex e navbar', () => {
-    cy.visit('/');
-    cy.get('img[alt="Pokedax Logo"]').should('be.visible');
+describe('Página Sobre', () => {
+  it('deve exibir o título e seções principais', () => {
+    cy.visit('/sobre');
+    cy.contains('Sobre').should('be.visible');
+    cy.contains('Visão Geral').should('be.visible');
+    cy.contains('Arquitetura').should('be.visible');
+    cy.contains('Fluxo de Dados').should('be.visible');
+    cy.contains('Stack').should('be.visible');
+    cy.contains('Decisões').should('be.visible');
+    cy.contains('Roadmap').should('be.visible');
+  });
+
+  it('deve exibir o menu de navegação', () => {
+    cy.visit('/sobre');
     cy.get('nav').should('exist');
+    cy.contains('Home').should('be.visible');
+    cy.contains('Sobre').should('be.visible');
   });
-
-  it('deve exibir uma lista de pokémons', () => {
-    cy.visit('/');
-    cy.get('.pokemon-card').should('have.length.greaterThan', 0);
-  });
-
-  it('deve abrir o modal ao clicar em um pokémon', () => {
-    cy.visit('/');
-    cy.get('.pokemon-card').first().click();
-    cy.get('.modal-content', { timeout: 10000 })   // aumenta o tempo de espera
-    .should('be.visible');
-    cy.contains('About').should('be.visible');
-  });
-
 });
